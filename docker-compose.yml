@@ -1,0 +1,26 @@
+version: "2"
+services:
+  dashboard:
+    container_name: dashboard
+    restart: always
+    build: ./dashboard
+
+    ports:
+      - "80:80"
+    links:
+      - api
+  api:
+    container_name: api
+    restart: always
+    build: ./api
+    ports:
+      - "5000:5000"
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
