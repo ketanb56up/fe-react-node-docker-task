@@ -1,5 +1,22 @@
 const mongoose = require('mongoose')
 
+const findingsSchema = mongoose.Schema({
+  type: String,
+  ruleId: String,
+  location: {
+    path: String,
+    positions: {
+      begin: {
+        line: Number
+      }
+    }
+  },
+  metadata: {
+    description: String,
+    severity: String
+  }
+})
+
 const securityScanSchema = new mongoose.Schema(
   {
     status: {
@@ -13,9 +30,7 @@ const securityScanSchema = new mongoose.Schema(
       type: String,
       require: true
     },
-    findings: {
-      type: JSON
-    },
+    findings: [findingsSchema],
     queuedAt: {
       type: Date,
       default: Date.now
