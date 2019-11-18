@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Badge from '@material-ui/core/Badge'
 import MailIcon from '@material-ui/icons/Mail'
+import FullScreenDialog from './FullScreenDialog'
 import Api from '../helpers/api'
 
 const useStyles = makeStyles(theme => ({
@@ -26,6 +27,16 @@ const useStyles = makeStyles(theme => ({
 const ScanListings = () => {
   const classes = useStyles()
   const [securityScan, setScans] = useState([])
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   useEffect(() => {
     async function fetchData() {
       const {
@@ -127,11 +138,22 @@ const ScanListings = () => {
               }
             />
             {scan.findings.length > 0 && (
-              <Box m={2}>
-                <Badge badgeContent={scan.findings.length} color="primary">
-                  <MailIcon />
-                </Badge>
-              </Box>
+              <>
+                <Box m={2}>
+                  <Badge
+                    onClick={handleClickOpen}
+                    badgeContent={scan.findings.length}
+                    color="primary"
+                  >
+                    <MailIcon />
+                  </Badge>
+                </Box>
+                <FullScreenDialog
+                  findings={scan.findings}
+                  open={open}
+                  handleClose={handleClose}
+                />
+              </>
             )}
           </ListItem>
           <Divider variant="inset" component="li" />
