@@ -6,7 +6,7 @@ services:
     build: ./dashboard
 
     ports:
-      - "80:80"
+      - "3000:80"
     links:
       - api
   api:
