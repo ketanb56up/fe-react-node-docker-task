@@ -13,6 +13,8 @@ services:
     container_name: api
     restart: always
     build: ./api
+    environment:
+     - NODE_ENV=production
     ports:
       - "5000:5000"
     links:
